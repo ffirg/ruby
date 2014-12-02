@@ -22,14 +22,17 @@ def cleanup(component)
 
   when "containers"
     puts "Removing #{component}:"
-    #containers = `docker ps -a -q`
     containers = %x[docker ps -a -q].strip.gsub(/\s+/, ' ')
+    # need to add sanity check here to ensure we have something to get rid of!
+    # only run system command if we have something
     containers_cmd = "docker rm #{containers}"
     system("#{containers_cmd}")
 
   when "images"
     puts "Removing #{component}:"
     images = %x[docker images -q].strip.gsub(/\s+/, ' ')
+    # need to add sanity check here to ensure we have something to get rid of!
+    # only run system command if we have something
     images_cmd = "docker rmi #{images}"
     system("#{images_cmd}")
 
